@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "163023546495",
+    "project_id": "prayer-jamat-timings",
+    "storage_bucket": "prayer-jamat-timings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163023546495:android:db3dc0d07aef128861b74a",
+        "android_client_info": {
+          "package_name": "com.example.admin_jammat_timinig_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgTPY2d0chjzfOxeQTuxmsIBlN_Iy-Vd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163023546495:android:22eb25bbfb97cc3061b74a",
+        "android_client_info": {
+          "package_name": "com.example.prayer_jamat_timings"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgTPY2d0chjzfOxeQTuxmsIBlN_Iy-Vd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
