@@ -1,16 +1,13 @@
-# prayer_jamat_timings
+# UserPrayerTimings App
 
-A new Flutter project.
+## Description:
+UserPrayerTimings is a mobile application built with Flutter and Firebase that allows users to view and track prayer times for various mosques. The app provides a list of mosques with their respective prayer and Jamat timings. Users can select their favorite mosques and receive notifications for prayer time updates. The app features a search functionality for easy mosque lookup and ensures that selected favorites are saved locally for persistence across app restarts.
 
-## Getting Started
+## Features:
+- View prayer and Jamat timings for different mosques.
+- Search for mosques by name.
+- Select and save favorite mosques.
+- Receive push notifications for prayer time updates.
+- Persistent storage of favorite mosques using shared preferences.
+- Clean and user-friendly interface.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
