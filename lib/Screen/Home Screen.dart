@@ -59,149 +59,165 @@ class _MasjidsScreenState extends State<MasjidsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightGreenAccent,
+        backgroundColor: Color(0xFF004D40),
         title: const Text(
           'Masjids',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold,color: Colors.amber),
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.lightGreenAccent[100],
-                hintText: 'Search masjids...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    color: Colors.lightGreen,
-                    width: 5,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF004D40), Color(0xFF00796B)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white.withOpacity(0.1),
+                  hintText: 'Search masjids...',
+                  hintStyle: TextStyle(color: Colors.amber),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: Colors.amber,
+                      width: 3,
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide(
-                    color: Colors.lightGreen,
-                    width: 5,
+                  enabledBorder:OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.amber,
+                      width: 3,
+                    ),
+                  ) ,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                      color: Colors.amber,
+                      width: 3,
+                    ),
                   ),
+                  contentPadding:
+                  EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 ),
-                contentPadding:
-                EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               ),
             ),
-          ),
-          Expanded(
-            child: FutureBuilder<List<Map<String, dynamic>>>(
-              future: fetchMasjids(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return const Center(child: Text('Error fetching data'));
-                }
-                if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Center(child: Text('No masjids found'));
-                }
+            Expanded(
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: fetchMasjids(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Error fetching data'));
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No masjids found'));
+                  }
 
-                List<Map<String, dynamic>> masjids = snapshot.data!;
+                  List<Map<String, dynamic>> masjids = snapshot.data!;
 
-                return ListView.builder(
-                  itemCount: masjids.length,
-                  itemBuilder: (context, index) {
-                    String masjidName = masjids[index]['masjidname'] ?? 'Unknown';
-                    String address =
-                        masjids[index]['address'] ?? 'No address available';
-                    String documentId = masjids[index]['documentID'];
+                  return ListView.builder(
+                    itemCount: masjids.length,
+                    itemBuilder: (context, index) {
+                      String masjidName = masjids[index]['masjidname'] ?? 'Unknown';
+                      String address =
+                          masjids[index]['address'] ?? 'No address available';
+                      String documentId = masjids[index]['documentID'];
 
-                    // Initialize masjid selection state
-                    Provider.of<SelectMasjid>(context, listen: false)
-                        .initializeMasjid(documentId);
+                      // Initialize masjid selection state
+                      Provider.of<SelectMasjid>(context, listen: false)
+                          .initializeMasjid(documentId);
 
-                    return Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.green, width: 4)),
-                      margin: EdgeInsets.all(5),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PrayerJamatTimings(
-                                      masjidName: masjidName,
-                                      documentId: documentId)));
-                        },
-                        tileColor: Colors.grey[200],
-                        trailing: Consumer<SelectMasjid>(
-                          builder: (context, selectMasjid, child) {
-                            bool isSelected =
-                            selectMasjid.isMasjidSelected(documentId);
-                            return InkWell(
-                              onTap: () {
-                                if (isSelected) {
-                                  Notifications().verifyNotifications(
-                                      context, "Remove", masjidName, () {
-                                    Notifications().removeToken(documentId);
-                                    selectMasjid.toggleMasjidSelection(documentId);
-                                  }, "remove", "no longer");
-                                } else {
-                                  Notifications().verifyNotifications(
-                                      context, "Add", masjidName, () {
-                                    Notifications().addToken(documentId);
-                                    selectMasjid.toggleMasjidSelection(documentId);
-                                  }, "add", "now");
-                                }
-                              },
-                              child: Icon(
-                                isSelected ? Icons.star : Icons.star_border,
-                                color: isSelected ? Colors.yellowAccent : null,
-                              ),
-                            );
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.amber, width: 3)),
+                        margin: EdgeInsets.all(8),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PrayerJamatTimings(
+                                        masjidName: masjidName,
+                                        documentId: documentId)));
                           },
-                        ),
-                        leading: Icon(
-                          Icons.mosque,
-                          size: 50,
-                          color: Colors.lightGreen,
-                        ),
-                        title: Text(
-                          masjidName,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.teal,
-                              fontSize: 18),
-                        ),
-                        subtitle: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.green,
-                            ),
-                            SizedBox(width: 4),
-                            Expanded(
-                              child: Text(
-                                address,
-                                softWrap: true,
-                                style: TextStyle(color: Colors.indigo),
+                          tileColor: Colors.white.withOpacity(0.1),
+                          trailing: Consumer<SelectMasjid>(
+                            builder: (context, selectMasjid, child) {
+                              bool isSelected =
+                              selectMasjid.isMasjidSelected(documentId);
+                              return InkWell(
+                                onTap: () {
+                                  if (isSelected) {
+                                    Notifications().verifyNotifications(
+                                        context, "Remove", masjidName, () {
+                                      Notifications().removeToken(documentId);
+                                      selectMasjid.toggleMasjidSelection(documentId);
+                                    }, "remove", "no longer");
+                                  } else {
+                                    Notifications().verifyNotifications(
+                                        context, "Add", masjidName, () {
+                                      Notifications().addToken(documentId);
+                                      selectMasjid.toggleMasjidSelection(documentId);
+                                    }, "add", "now");
+                                  }
+                                },
+                                child: Icon(
+                                  isSelected ? Icons.star : Icons.star_border,
+                                  color: isSelected ? Colors.yellowAccent : Colors.white,
+                                ),
+                              );
+                            },
+                          ),
+                          leading: Icon(
+                            Icons.mosque,
+                            size: 50,
+                            color: Colors.amber,
+                          ),
+                          title: Text(
+                            masjidName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.amber,
+                                fontSize: 18),
+                          ),
+                          subtitle: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.amber,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 4),
+                              Expanded(
+                                child: Text(
+                                  address,
+                                  softWrap: true,
+                                  style: TextStyle(color: Colors.amber),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

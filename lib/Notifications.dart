@@ -102,32 +102,61 @@ class Notifications {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('$text Masjid as Favourite'),
+          title: Text(
+            '$text Masjid as Favourite',
+            style: TextStyle(color: Colors.amber), // Amber color for title text
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Are you sure to $text1 $masjidName as favourite?'),
+                Text(
+                  'Are you sure to $text1 $masjidName as favourite?',
+                  style: TextStyle(color: Colors.amber), // Amber color for content text
+                ),
                 SizedBox(height: 10),
-                Text('You will $text2 get notifications about this masjid.'),
+                Text(
+                  'You will $text2 get notifications about this masjid.',
+                  style: TextStyle(color: Colors.amber), // Amber color for content text
+                ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.amber), // Amber color for 'Cancel' button text
+              ),
+              style: TextButton.styleFrom(
+                  backgroundColor: Color(0xFF00796B),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10))
+                  ,side: BorderSide(color: Colors.amber,width: 2)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
+            SizedBox(width: 50,),
             ElevatedButton(
-              child: Text('Confirm'),
+              child: Text(
+                'Confirm',
+                style: TextStyle(color: Colors.amber), // White color for 'Confirm' button text
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
                 onConfirm();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF00796B),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colors.amber,width: 2)
+                ),
+              ),
             ),
           ],
+          backgroundColor: Color(0xFF004D40), // Makes the background of the dialog transparent
+          elevation: 0, // Removes the default shadow
         );
       },
     );
